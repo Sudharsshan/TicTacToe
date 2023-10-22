@@ -7,4 +7,6 @@
     <string name="x">X</string>
     <string name="dash">-</string>
     <string name="newG">New Game</string>
+    <string name="splsh_cntnt">TicTacToe</string>
+    <string name="splsh_imgVw">Splash screen icon</string>
 </resources>

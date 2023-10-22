@@ -3,12 +3,17 @@ package andromeda.basicgames.tictactoe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.UserHandle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.window.SplashScreen;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,73 +29,96 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //Initialising boxes to track data stored in them
-        box[0] = findViewById(R.id.box1);
-        box[1] =  findViewById(R.id.box2);
-        box[2] =  findViewById(R.id.box3);
-        box[3] =  findViewById(R.id.box4);
-        box[4] =  findViewById(R.id.box5);
-        box[5] =  findViewById(R.id.box6);
-        box[6] =  findViewById(R.id.box7);
-        box[7] =  findViewById(R.id.box8);
-        box[8] =  findViewById(R.id.box9);
 
-        userChoice  = '0';
+//        if(isFirstLaunch()){
+//            //If this is the first launch of the app, Splash screen is loaded.
+//            Intent intent = new Intent(MainActivity.this, SplashActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//        else {
+            //else the main Activity continues.
+            setContentView(R.layout.activity_main);
 
-        row1 = findViewById(R.id.row1);
-        row2 = findViewById(R.id.row2);
-        row3 = findViewById(R.id.row3);
+            //Initialising boxes to track data stored in them
+            box[0] = findViewById(R.id.box1);
+            box[1] =  findViewById(R.id.box2);
+            box[2] =  findViewById(R.id.box3);
+            box[3] =  findViewById(R.id.box4);
+            box[4] =  findViewById(R.id.box5);
+            box[5] =  findViewById(R.id.box6);
+            box[6] =  findViewById(R.id.box7);
+            box[7] =  findViewById(R.id.box8);
+            box[8] =  findViewById(R.id.box9);
 
-        //Initialize the Executor Service
-        backgroundExecutor = Executors.newSingleThreadExecutor();
+            userChoice  = '0';
+
+            row1 = findViewById(R.id.row1);
+            row2 = findViewById(R.id.row2);
+            row3 = findViewById(R.id.row3);
+
+            //Initialize the Executor Service
+            backgroundExecutor = Executors.newSingleThreadExecutor();
+        //}
+
     }
 
+    //This method checks if it is the first time the app is launching, if not it will not start the splash screen again.
+    // Deprecating it as it is not launching the splash screen everytime the app is launched from launcher.
+    private boolean isFirstLaunch(){
+        SharedPreferences preferences = getSharedPreferences("app_prefs",  MODE_PRIVATE);
+        boolean isFirstLaunch = preferences.getBoolean("first_launch", true);
+
+        //If it is not the first launch, mark it as not the first launch for the future.
+        if(isFirstLaunch){
+            Log.d("Splash screen","App has launched for the first time");
+            preferences.edit().putBoolean("first_launch", false).apply();
+        }
+        else
+            Log.d("Splash screen","App is not launched for the first time");
+
+        return isFirstLaunch;
+    }
+
+    //Once user gives an input, computer will provide it's input using a background thread.
     public void start() {
-        //User has chosen the computer to start.
         //Disabling the main grid textView from user interaction
         manageAllTextViews(false);
 
         //Starting a background thread for computing the task
-        backgroundExecutor.execute(new Runnable(){
-            @Override
-            public void run(){
-                //Background task starts here
-                String boxValue; //to fetch the selected box's content
-                int computerBox;
-                boolean b;
+        backgroundExecutor.execute(() -> {
+            //Background task starts here
+            String boxValue; //to fetch the selected box's content
+            int computerBox;
+            boolean b;
 
-                //Computer get the other variable always.
-                if(userChoice=='X') computerChoice = 'O';
-                else computerChoice = 'X';
+            //Computer get the other variable always.
+            if(userChoice=='X') computerChoice = 'O';
+            else computerChoice = 'X';
 
-                do {
-                    //Fetch a random number between 0-9
-                    computerBox = (int) (Math.random() * 9);
+            do {
+                //Fetch a random number between 0-9
+                computerBox = (int) (Math.random() * 9);
 
-                    //Fetch the content in the box of the previously fetched random number
-                    boxValue = box[computerBox].getText().toString();
+                //Fetch the content in the box of the previously fetched random number
+                boxValue = box[computerBox].getText().toString();
 
-                    //Check if the content of that box has either one's choice, else continue.
-                    b = boxValue.equals(String.valueOf(userChoice)) || boxValue.equals((String.valueOf(computerChoice)));
-                }while(b);
+                //Check if the content of that box has either one's choice, else continue.
+                b = boxValue.equals(String.valueOf(userChoice)) || boxValue.equals((String.valueOf(computerChoice)));
+            }while(b);
 
-                Log.d("Computer choice", "Computer has finished choosing it's decision= "+computerBox);
-                Log.d("Fill box request", "box fill request has been initialized");
+            Log.d("Computer choice", "Computer has finished choosing it's decision= "+computerBox);
+            Log.d("Fill box request", "box fill request has been initialized");
 
-                //Once the task is completed, this method will provide the output.
-                final int finalComputerBox = computerBox;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        box[finalComputerBox].setText(String.valueOf(computerChoice));
-                        Log.d("Box fill successful","Box " +finalComputerBox+" bas been filled successfully.");
+            //Once the task is completed, this method will provide the output.
+            final int finalComputerBox = computerBox;
+            runOnUiThread(() -> {
+                box[finalComputerBox].setText(String.valueOf(computerChoice));
+                Log.d("Box fill successful","Box " +finalComputerBox+" bas been filled successfully.");
 
-                        //Allowing the user to interact once the computer has marked a box
-                        manageAllTextViews(true);
-                    }
-                });
-            }
+                //Allowing the user to interact once the computer has marked a box
+                manageAllTextViews(true);
+            });
         });
     }
 
@@ -98,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         if(condition) {
             userChoice = 'X'; //User has chosen X
             condition = false;
+            Log.d("UserChoice","User has chosen X");
             Toast.makeText(this, "You've chosen "+userChoice+".", Toast.LENGTH_SHORT).show();
         } else
             Toast.makeText(this, "You've chosen "+userChoice+" already", Toast.LENGTH_SHORT).show();
@@ -108,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         if(condition){
             userChoice = 'O'; //User has chosen O
             condition = false;
+            Log.d("UserChoice","User has chosen O");
             Toast.makeText(this, "You've chosen "+userChoice+".", Toast.LENGTH_SHORT).show();
         }
         else
@@ -121,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
             if(populateBox(view))
                 start();
 
+        Log.d("Inputs provided","both the user and computer have given their inputs");
         //Once both the user and computer have given their inputs, we'll check for line formation
         checkForResult();
     }
@@ -176,16 +207,12 @@ public class MainActivity extends AppCompatActivity {
         6 7 8
          */
 
-        //major problem: since at the beginning of the app, all the boxes have '-' , the app returns user has won.
-
-
         //a for loop to check for horizontal line formation at different rows
         for(int i = 0; i < 7; i++) {
             if (!box[i].getText().equals("-"))
                 if (box[i].getText().toString().equals(box[i + 1].getText().toString()))
                     if (box[i + 1].getText().toString().equals(box[i + 2].getText().toString()))
-                        formationOccurred("Horizontal");
-            Log.i("Content of box[i]", box[i].getText().toString());
+                        formationOccurred("Horizontal", box[i].getText().toString());
         }
         Log.e("Horizontal line formation","Failed");
 
@@ -194,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
             if(!box[i].getText().equals("-"))
                 if(box[i].getText().toString().equals(box[i + 3].getText().toString()))
                     if (box[i + 3].getText().toString().equals(box[i + 6].getText().toString()))
-                        formationOccurred("Vertical");
+                        formationOccurred("Vertical", box[i].getText().toString());
 
         Log.e("Vertical line formation","Failed");
 
@@ -202,20 +229,23 @@ public class MainActivity extends AppCompatActivity {
         if(!box[0].getText().equals("-"))
             if(box[0].getText().toString().equals(box[4].getText().toString()))
                 if(box[4].getText().toString().equals(box[8].getText().toString()))
-                    formationOccurred("Diagonal");
+                    formationOccurred("Diagonal", box[0].getText().toString());
 
         if(!box[2].getText().equals("-"))
             if(box[2].getText().toString().equals(box[4].getText().toString()))
                 if(box[4].getText().toString().equals(box[6].getText().toString()))
-                    formationOccurred("Diagonal");
+                    formationOccurred("Diagonal", box[2].getText().toString());
 
         Log.e("Diagonal Line formation","failed");
     }
 
-    protected void formationOccurred(String type){
+    protected void formationOccurred(String type, String player){
         //Setting all boxes as un-interact-able for user
         manageAllTextViews(false);
-        Toast.makeText(this, userChoice+" has won the game with "+type+" attack!!", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, player+" has won the game with "+type+" attack!!", Toast.LENGTH_SHORT).show();
+
+        Log.i("Game finished", player+" has won the game");
     }
 
     //This method is called for restarting the game.
@@ -223,5 +253,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+        Log.d("Game restart", "The app is restarted.");
     }
 }
