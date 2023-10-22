@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tictactoe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shadowColor="#808080"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="2"
+        android:text="@string/tic_tac_toe"
+        android:textColor="#201F1F"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.089" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="271dp"
+        android:layout_height="401dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tictactoe">
+
+        <LinearLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_column="0"
+            app:layout_row="0">
+
+            <LinearLayout
+                android:id="@+id/row1"
+                android:layout_width="match_parent"
+                android:layout_height="33pt"
+                android:orientation="horizontal"
+                app:layout_column="0"
+                app:layout_row="0">
+
+                <TextView
+                    android:id="@+id/box1"
+                    android:layout_width="33pt"
+                    android:layout_height="fill_parent"
+                    android:clickable="true"
+                    android:onClick="box"
+                    android:text="@string/dash"
+                    android:textAlignment="center"
+                    app:layout_column="0"
+                    app:layout_row="0"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+
+                <TextView
+                    android:id="@+id/box2"
+                    android:layout_width="33pt"
+                    android:layout_height="fill_parent"
+                    android:clickable="true"
+                    android:onClick="box"
+                    android:text="@string/dash"
+                    android:textAlignment="center"
+                    app:layout_column="1"
+                    app:layout_row="0" />
+
+                <TextView
+                    android:id="@+id/box3"
+                    android:layout_width="33pt"
+                    android:layout_height="fill_parent"
+                    android:clickable="true"
+                    android:onClick="box"
+                    android:text="@string/dash"
+                    android:textAlignment="center"
+                    app:layout_column="2"
+                    app:layout_row="0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row2"
+                android:layout_width="fill_parent"
+                android:layout_height="33pt"
+                android:orientation="horizontal"
+                app:layout_column="0"
+                app:layout_row="1">
+
+                <TextView
+                    android:id="@+id/box4"
+                    android:layout_width="33pt"
+                    android:layout_height="33pt"
+                    android:clickable="true"
+                    android:onClick="box"
+                    android:text="@string/dash"
+                    android:textAlignment="center"
+                    app:layout_column="0"
+                    app:layout_row="1" />
+
+                <TextView
+                    android:id="@+id/box5"
+                    android:layout_width="33pt"
+                    android:layout_height="33pt"
+                    android:clickable="true"
+                    android:onClick="box"
+                    android:text="@string/dash"
+                    android:textAlignment="center"
+                    app:layout_column="1"
+                    app:layout_row="1" />
+
+                <TextView
+                    android:id="@+id/box6"
+                    android:layout_width="33pt"
+                    android:layout_height="33pt"
+                    android:clickable="true"
+                    android:onClick="box"
+                    android:text="@string/dash"
+                    android:textAlignment="center"
+                    app:layout_column="2"
+                    app:layout_row="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row3"
+                android:layout_width="fill_parent"
+                android:layout_height="33pt"
+                android:orientation="horizontal"
+                app:layout_column="0"
+                app:layout_row="2">
+
+                <TextView
+                    android:id="@+id/box7"
+                    android:layout_width="33pt"
+                    android:layout_height="33pt"
+                    android:clickable="true"
+                    android:onClick="box"
+                    android:text="@string/dash"
+                    android:textAlignment="center"
+                    app:layout_column="0"
+                    app:layout_row="2" />
+
+                <TextView
+                    android:id="@+id/box8"
+                    android:layout_width="33pt"
+                    android:layout_height="33pt"
+                    android:clickable="true"
+                    android:onClick="box"
+                    android:text="@string/dash"
+                    android:textAlignment="center"
+                    app:layout_column="1"
+                    app:layout_row="2" />
+
+                <TextView
+                    android:id="@+id/box9"
+                    android:layout_width="33pt"
+                    android:layout_height="33pt"
+                    android:clickable="true"
+                    android:onClick="box"
+                    android:text="@string/dash"
+                    android:textAlignment="center"
+                    app:layout_column="2"
+                    app:layout_row="2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_column="0"
+                app:layout_row="0">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chose"
+                    android:textAlignment="center"
+                    app:layout_column="0"
+                    app:layout_row="4" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/useOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_column="0"
+                app:layout_row="0">
+
+                <TextView
+                    android:id="@+id/X"
+                    android:layout_width="50pt"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="chooseX"
+                    android:text="@string/x"
+                    android:textAlignment="center"
+                    android:textSize="45sp"
+                    app:layout_column="0"
+                    app:layout_row="0" />
+
+                <TextView
+                    android:id="@+id/O"
+                    android:layout_width="50pt"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="chooseO"
+                    android:text="@string/o"
+                    android:textAlignment="center"
+                    android:textSize="45sp"
+                    app:layout_column="0"
+                    app:layout_row="0" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/newG"
+        android:onClick="startNewGame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

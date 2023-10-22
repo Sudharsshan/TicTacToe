@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">tictactoe</string>
+    <string name="tic_tac_toe">TIC TAC TOE</string>
+    <string name="compturn">Your Turn</string>
+    <string name="chose">Choose your Variable:</string>
+    <string name="o">O</string>
+    <string name="x">X</string>
+    <string name="dash">-</string>
+    <string name="newG">New Game</string>
+</resources>
