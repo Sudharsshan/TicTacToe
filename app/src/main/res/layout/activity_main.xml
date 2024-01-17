@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:paddingTop="25pt">
+
+    <LinearLayout
+        android:layout_width="250sp"
+        android:layout_height="500sp"
+        android:orientation="vertical"
+        android:layout_marginLeft="30pt"
+        android:layout_marginRight="30pt">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="60pt"
+            android:layout_height="60pt"
+            android:layout_marginStart="25pt"
+            android:layout_marginTop="60pt"
+            android:contentDescription="@string/imgDescription"
+            app:srcCompat="@android:drawable/ic_input_add"
+            tools:ignore="ImageContrastCheck" />
+
+
+        <Button
+            android:id="@+id/plrVsBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30pt"
+            android:onClick="pvc"
+            android:text="@string/plrVsBot" />
+
+        <Button
+            android:id="@+id/plrVsComp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5pt"
+            android:onClick="pvp"
+            android:text="@string/plrVsPlr" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/history"
+        android:layout_marginBottom="10pt"
+        android:layout_marginEnd="15pt"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="bottom"
+        android:onClick="history"/>
+
+</android.widget.RelativeLayout>
